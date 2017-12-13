@@ -3,7 +3,6 @@
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
 
 /**
  * @brief Implementation of the Well Equidistributed Long-period Linear (WELL)
@@ -21,6 +20,7 @@
 #include <istream>
 #include <limits>
 #include <ostream>
+#include <functional>
 #include <stdexcept>
 
 #define STATIC_ASSERT(x) static_assert(x, #x)
@@ -285,7 +285,7 @@ public:
     void seed(Generator& g)
     {
         // Ensure std::generate_n doesn't copy the generator g by using
-        // boost::reference_wrapper
+        // std::reference_wrapper
         std::generate_n(state_, state_size, std::ref(g));
     }
 

@@ -1,4 +1,5 @@
 // Copyright (c) Sergiu Dotenco 2010
+// Copyright (c) Seth Heeren - made independent of BOOST using C++11 - 2017
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -58,7 +59,7 @@ class WellTestCase
         unsigned* p = state;
         rng.seed(p, p + RandomNumberGenerator::state_size);
 
-        result_type x;
+        result_type x = 0;
 
         int iterations = 1000000000;
 
