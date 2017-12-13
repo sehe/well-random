@@ -1,22 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
-project (Random)
+project (test_well_random)
 
-enable_testing()
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_C_COMPILER_ID MATCHES "Clang") OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang") )
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic")
+endif()
 
-if (WIN32)
-  option (Boost_USE_STATIC_LIBS "Use static Boost libraries" ON)
-endif (WIN32)
-
-find_package (Boost 1.43.0 REQUIRED unit_test_framework)
-
-include_directories (${Boost_INCLUDE_DIRS})
-
-if (NOT Boost_USE_STATIC_LIBS)
-  add_definitions (-DBOOST_TEST_DYN_LINK)
-endif (NOT Boost_USE_STATIC_LIBS)
-
-if (CMAKE_COMPILER_IS_GNUCXX)
-  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -pedantic")
-endif (CMAKE_COMPILER_IS_GNUCXX)
-
-add_subdirectory (tests)
+include_directories(${CMAKE_SOURCE_DIR})
+add_executable (${PROJECT_NAME} main.cpp)
