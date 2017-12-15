@@ -140,25 +140,20 @@ struct M6
 
 //! @}
 
-template <typename T, typename = typename std::enable_if<not std::is_signed<T>()>::type>
+template <typename T, typename = typename std::enable_if<!std::is_signed<T>()>::type>
 constexpr static bool is_powerof2(T v) { return v && ((v & (v - 1)) == 0); }
 
-template<class UIntType, UIntType r, typename Enable = void> struct Modulo;
-
 template<class UIntType, UIntType r>
-struct Modulo<UIntType, r, typename std::enable_if<is_powerof2(r)>::type> {
-    template<class T> static T calc(T value) { return value & (r - 1); }
-};
-
-template<class UIntType, UIntType r>
-struct Modulo<UIntType, r, typename std::enable_if<!is_powerof2(r)>::type> {
+struct Modulo {
+    template<class T> static T calc(T value) { return calc(value, std::integral_constant<bool, is_powerof2(r)>{}); }
     /**
      * @brief Determines @a value modulo @a r.
      *
      * @pre value >= 0 and value < 2 * r
      * @post value >= 0 and value < r
      */
-    template<class T> static T calc(T value) {
+    template<class T> static T calc(T value, std::true_type) { return value & (r - 1); }
+    template<class T> static T calc(T value, std::false_type) {
         STATIC_ASSERT(!std::numeric_limits<UIntType>::is_signed);
         assert(value < 2 * r);
 

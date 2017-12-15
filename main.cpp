@@ -92,12 +92,16 @@ public:
  * @hideinitializer
  */
 int main() {
-    //CHECK_EQUAL(16, Detail::shift<2>(64));
-    //CHECK_EQUAL(64, Detail::shift<-2>(16));
-    //CHECK_EQUAL(32, Detail::shift<0>(32));
-    //CHECK(Detail::is_powerof2(512u));
-    //CHECK(not Detail::is_powerof2(0u));
+    CHECK_EQUAL(16, Detail::shift<2>(64));
+    CHECK_EQUAL(64, Detail::shift<-2>(16));
+    CHECK_EQUAL(32, Detail::shift<0>(32));
+    CHECK(Detail::is_powerof2(512u));
+    CHECK(!Detail::is_powerof2(0u));
 
+#ifdef COLIRU
+    std::cout << "WARNING: skipped majority of tests\n";
+    Well44497a_ME()();
+#else
     WellTestCase<Well512a,   0x2b3fe99e>::run();
     WellTestCase<Well521a,   0xc9878363>::run();
     WellTestCase<Well521b,   0xb75867f6>::run();
@@ -115,4 +119,5 @@ int main() {
     WellTestCase<Well23209b, 0xf1a77751>::run();
     WellTestCase<Well44497a, 0xfdd7c07b>::run();
     WellTestCase<Well44497b, 0x9406547b>::run();
+#endif
 }
